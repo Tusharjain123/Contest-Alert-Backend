@@ -25,6 +25,6 @@ cron.schedule('0 14 * * *', async () => {
 })
 
 
-app.listen(process.env.REACT_APP_PORT || 80,()=>{
+app.listen(process.env.REACT_APP_PORT,()=>{
     console.log("Server is started")
 })
