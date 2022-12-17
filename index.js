@@ -7,7 +7,7 @@ var cron = require('node-cron');
 connectToMongo()
 const app = express() 
 app.use(cors({
-    origin:"*"
+    origin: process.env.REACT_APP_PROXY
 }))
 app.use(express.json())
 app.use("/api/auth", require("./routes/auth.js"))
