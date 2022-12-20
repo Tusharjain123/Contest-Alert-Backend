@@ -4,7 +4,13 @@ const cors = require("cors")
 const axios = require("axios");
 var cron = require('node-cron');
 
-connectToMongo()
+const run = async () =>{
+  await connectToMongo().then(()=>{
+    console.log("Connected")
+  }).catch(err => console.log(err))
+
+}
+run()
 const app = express() 
 // app.use(cors({
 //     origin: "*"
