@@ -22,10 +22,10 @@ function secondsToTime(e) {
 
 // For Adding data and Sending subscription message
 router.post("/subscribe", async (req, res) => {
-  let u = await User.findOne({ email: req.body.email })
-  if (u) {
-    return res.status(400).json({ error: "Sorry a user with this email already exist" });
-  }
+//   let u = await User.findOne({ email: req.body.email })
+//   if (u) {
+//     return res.status(400).json({ error: "Sorry a user with this email already exist" });
+//   }
   try {
     const { name, email } = req.body;
     const user = new User({ name, email });
