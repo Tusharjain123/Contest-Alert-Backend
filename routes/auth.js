@@ -28,7 +28,7 @@ router.post("/subscribe", async (req, res) => {
 //   }
   try {
     const { name, email } = req.body;
-    const user = new User({ name, email });
+    const user = new User({ name : name, email : email });
     const saveNote = await user.save();
     res.json(saveNote);
     const msg = {
