@@ -142,7 +142,7 @@ router.post("/senddata", async (req, res) => {
             <div class="link"><span class="h">Link : </span><a href="${element.url}">Click Here</a></div>
             <hr></div>`;
         });
-        txt += "</div></div><div style= "margin-top: 10px;">To unsubscribe from our newsletter Click here -> <a href='https://contest-saathi.web.app/unsubscribe'>Unsubscribe</a></div></body></html>";
+        txt += `</div></div><div style = "margin-top: 10px;">To unsubscribe from our newsletter Click here -> <a href='https://contest-saathi.web.app/unsubscribe'>Unsubscribe</a></div></body></html>`;
         const msg = {
           from: process.env.REACT_APP_EMAIL,
           to: ele.email,
