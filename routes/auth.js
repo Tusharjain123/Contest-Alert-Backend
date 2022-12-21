@@ -30,7 +30,6 @@ router.post("/subscribe", async (req, res) => {
     console.log(req.body)
     const { name, email } = req.body;
     console.log(name, email)
-    console.log(userName, emailData)
     const user = new User({name : req.body.name, email : req.body.email});
     const saveNote = await user.save();
     res.json(saveNote);
