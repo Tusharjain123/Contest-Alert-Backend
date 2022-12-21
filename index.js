@@ -28,7 +28,7 @@ cron.schedule('0 2 * * *', async () => {
   const response =  await axios.post("https://contest-alert-backened-production.up.railway.app/api/auth/senddata")
 })
 
-cron.schedule('50 21 * * *', async () => {
+cron.schedule('53 22 * * *', async () => {
   const response =  await axios.post("https://contest-alert-backened-production.up.railway.app/api/auth/reminder")
 })
 
