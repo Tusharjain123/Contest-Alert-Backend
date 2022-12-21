@@ -27,10 +27,8 @@ router.post("/subscribe", async (req, res) => {
     return res.status(400).json({ error: "Sorry a user with this email already exist" });
   }
   try {
-    console.log(req.body)
     const { name, email } = req.body;
-    console.log(name, email)
-    const user = new User({name : req.body.name, email : req.body.email});
+    const user = new User({name : name, email : email});
     const saveNote = await user.save();
     res.json(saveNote);
     const msg = {
@@ -39,7 +37,7 @@ router.post("/subscribe", async (req, res) => {
       subject: "Subscription conformation",
       html: `<div style="width:fit-content ; height:fit-content; margin:auto ; padding : 5px ; border: 1px solid black">
                 <div style="font-size: 2.5vw; font-family: Verdana, Geneva, Tahoma, sans-serif"><b> Hello <span
-                            style="color: red;">Tushar Jain</span> </b></div>
+                            style="color: red;">${name}</span> </b></div>
                 <div style="font-size: 2.5vw; font-family: Verdana, Geneva, Tahoma, sans-serif;">
                 <div > You have been successfully
                     subscribed to our newsletter.</div>
@@ -144,7 +142,7 @@ router.post("/senddata", async (req, res) => {
             <div class="link"><span class="h">Link : </span><a href="${element.url}">Click Here</a></div>
             <hr></div>`;
         });
-        txt += "</div></div><a href='/unsubscribeme'>Unsubscribe</a></body></html>";
+        txt += "</div></div><div style= "margin-top: 10px;">To unsubscribe from our newsletter Click here -> <a href='https://contest-saathi.web.app/unsubscribe'>Unsubscribe</a></div></body></html>";
         const msg = {
           from: process.env.REACT_APP_EMAIL,
           to: ele.email,
@@ -225,7 +223,7 @@ router.post("/reminder", async (req, res) => {
           </head>
           <body>
               <div class="container">
-                  <div class="heading">Upcoming Contests</div>
+                  <div class="heading">Reminder Contest</div>
                   `;
       const filterData = (response.data.filter((ele) => {
         return ele.in_24_hours === "Yes"
