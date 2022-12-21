@@ -3,7 +3,6 @@ const express = require("express")
 const cors = require("cors")
 const axios = require("axios");
 var cron = require('node-cron');
-const bodyParser = require("body-parser")
 const run = async () =>{
   await connectToMongo().then(()=>{
     console.log("Connected")
@@ -28,8 +27,8 @@ app.use((req, res, next) => {
 });
 // app.use(bodyParser.json())
 // app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json())
 app.use(express.urlencoded({ extended: true })); 
+app.use(express.json())
 app.use("/api/auth", require("./routes/auth.js"))
 
 app.get("/", (req,res)=>{
