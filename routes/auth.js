@@ -27,9 +27,9 @@ router.post("/subscribe", async (req, res) => {
 //     return res.status(400).json({ error: "Sorry a user with this email already exist" });
 //   }
   try {
-    console.log(req.body)
-    const { name, email } = req.body;
-    const user = new User({ name : name, email : email });
+    console.log(req)
+    const { user, email } = req.body;
+    const user = new User({ name : user, email : email });
     const saveNote = await user.save();
     res.json(saveNote);
     const msg = {
