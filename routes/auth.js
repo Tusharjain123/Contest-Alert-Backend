@@ -30,12 +30,12 @@ router.post("/subscribe", async (req, res) => {
     console.log(req.body)
     const { userName, emailData } = req.body;
     console.log(userName, emailData)
-    const user = new User(userName,emailData );
+    const user = new User( name : req.body.name, email : req.body.email );
     const saveNote = await user.save();
     res.json(saveNote);
     const msg = {
       from: process.env.REACT_APP_EMAIL,
-      to: emailData,
+      to: req.body.email,
       subject: "Subscription conformation",
       html: `<div style="width:fit-content ; height:fit-content; margin:auto ; padding : 5px ; border: 1px solid black">
                 <div style="font-size: 2.5vw; font-family: Verdana, Geneva, Tahoma, sans-serif"><b> Hello <span
