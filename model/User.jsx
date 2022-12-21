@@ -3,12 +3,12 @@ const {Schema} = mongoose
 const UserSchema = new Schema({
     name: {
         type: String,
-//         required: true
+        required: true
     }, 
     email: {
         type: String,
-//         required: true,
-//         unique: true
+        required: true,
+        unique: true
     }
 })
 module.exports = mongoose.model("user", UserSchema)
