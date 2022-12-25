@@ -24,11 +24,11 @@ app.get("/", (req,res)=>{
 res.send("Your API is working")})
 
 
-cron.schedule('0 4 * * *', async () => {
+cron.schedule('0 0 * * 0', async () => {
   const response =  await axios.post("https://contest-alert-backened-production.up.railway.app/api/auth/senddata")
 })
 
-cron.schedule('0 6 * * *', async () => {
+cron.schedule('0 2 * * *', async () => {
   const response =  await axios.post("https://contest-alert-backened-production.up.railway.app/api/auth/reminder")
 })
 
