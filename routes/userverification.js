@@ -3,10 +3,13 @@ const router = express.Router();
 const axios = require("axios");
 require("dotenv").config();
 const User = require("../model/User.jsx");
+const jwt = require("jsonwebtoken");
 
 router.get(`/user/verification/:id` ,async (req, res) => {
     try {
         const userid = (req.params.id).slice(128,-128)
+        const ve = jwt.verify(userid, process.env.SECRET_KEY)
+        console.log(ve)
         if (userid) {
             const userFind = await User.findOne({ userid: userid })
             if (userFind) {

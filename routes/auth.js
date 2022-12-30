@@ -20,7 +20,9 @@ router.post("/subscribe", [
         return res.status(400).json({ errors: errors.array() });
       }
       const { name, email } = req.body;
-      const userData = jwt.sign({ name: name, email: email }, process.env.SECRET_KEY)
+      const userData = jwt.sign({ name: name, email: email }, process.env.SECRET_KEY,{
+        expiresIn: '30m'
+    })
       const user = new User({ name: name, email: email, verified: false, userid: userData });
       const saveNote = await user.save();
       res.json(saveNote);
@@ -36,6 +38,7 @@ router.post("/subscribe", [
         <div>
             <p>We're excited to have you here. First, you need to confirm your account.<br> Just press the button below.</p>
             <button style="border-radius: 10px;border: 1px solid black;padding: 5px 10px;"><a href="${process.env.BASE_URL}/verificationemail/user/verification/${process.env.START_SECURE+userData +process.env.END_SECURE}" style="text-decoration: none;">Click here</a> </button>
+            <p>Link is valid for 30 minutes only!!!</p>
         </div>
     </div>`
       };
