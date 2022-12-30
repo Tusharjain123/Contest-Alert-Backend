@@ -11,13 +11,16 @@ router.post("/subscribe", [
   body("email", "Enter a valid email").isEmail()],
   async (req, res) => {
     let u = await User.findOne({ email: req.body.email })
-    if (u) {
+    if (u && u.verified) {
       return res.status(400).json({ error: "Sorry a user with this email already exist" });
     }
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(406).json({ errors: errors.array() });
+      }
+      if (u){
+        await User.findByIdAndDelete(u._id)
       }
       const { name, email } = req.body;
       const userData = jwt.sign({ name: name, email: email }, process.env.SECRET_KEY,{
