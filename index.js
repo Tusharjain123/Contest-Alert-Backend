@@ -19,16 +19,20 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json())
 app.use("/api/auth", require("./routes/auth.js"))
+app.use("/api/delete", require("./routes/delete.js"))
+app.use("/api/reminderemail", require("./routes/reminder.js"))
+app.use("/api/senddataemail", require("./routes/senddata.js"))
+app.use("/api/verificationemail", require("./routes/userverification.js"))
 
 app.get("/", (req,res)=>{
-res.send("Your API is working")})
+res.send("Working")})
 
 
 cron.schedule('0 0 * * 0', async () => {
   const response =  await axios.post("https://contest-alert-backened-production.up.railway.app/api/auth/senddata")
 })
 
-cron.schedule('0 2 * * *', async () => {
+cron.schedule('0 1 * * *', async () => {
   const response =  await axios.post("https://contest-alert-backened-production.up.railway.app/api/auth/reminder")
 })
 

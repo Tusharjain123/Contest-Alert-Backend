@@ -9,6 +9,14 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true
+    },
+    userid: {
+        type: String,
+        required: true
+    },
+    verified : {
+        type: Boolean,
+        required : true
     }
 })
 module.exports = mongoose.model("user", UserSchema)
