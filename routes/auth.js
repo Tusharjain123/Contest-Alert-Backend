@@ -21,7 +21,7 @@ router.post("/subscribe", [
       }
       const { name, email } = req.body;
       const userData = jwt.sign({ name: name, email: email }, process.env.SECRET_KEY,{
-        expiresIn: '30m'
+        expiresIn: '5m'
     })
       const user = new User({ name: name, email: email, verified: false, userid: userData });
       const saveNote = await user.save();
