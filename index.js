@@ -29,11 +29,11 @@ res.send("Working")})
 
 
 cron.schedule('0 0 * * 0', async () => {
-  const response =  await axios.post("https://contest-alert-backened-production.up.railway.app/api/auth/senddata")
+  const response =  await axios.post("https://contest-alert-backened-production.up.railway.app/api/senddataemail/senddata")
 })
 
 cron.schedule('0 1 * * *', async () => {
-  const response =  await axios.post("https://contest-alert-backened-production.up.railway.app/api/auth/reminder")
+  const response =  await axios.post("https://contest-alert-backened-production.up.railway.app/api/reminderemail/reminder")
 })
 
 
