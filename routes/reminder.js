@@ -64,7 +64,7 @@ router.post("/reminder", async (req, res) => {
                 let edt = new Date(element.end_time)
                 txt += `<div class="contest_data"> <div class="name"> <span class="h">Contest name </span> <span style="font-family:Verdana, Geneva, Tahoma, sans-serif ; font-size: 17px;font-style: italic;">: ${element.name}</span></div>
                   <div class="date"><span class="h">Date : </span> ${(sdt.toDateString())}</div>
-                  <div class="time"><span class="h">Time(IST 24 hr format) :  </span>${sdt.toTimeString().slice(0, 5)} to ${edt.toTimeString().slice(0, 5)} </div>
+                  <div class="time"><span class="h">Time(IST 24 hr format) :  </span>${sdt.toTimeString({timezone : "IST"}).slice(0, 5)} to ${edt.toTimeString({timezone : "IST"}).slice(0, 5)} </div>
                   <div class="duration"><span class="h">Duration : </span> ${secondsToTime(element.duration)}</div>
                   <div class="link"><span class="h">Link : </span><a href="${element.url}">Click Here</a></div>
                   <hr></div>`;
