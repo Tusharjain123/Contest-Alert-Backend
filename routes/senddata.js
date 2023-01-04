@@ -110,7 +110,7 @@ router.post("/senddata", async (req, res) => {
                             contestData("code_chef")
                             break;
                         case "Codeforces":
-                            contestData("code_chef")
+                            contestData("codeforces")
                             break
                         case "Leet Code":
                             contestData("leet_code")

@@ -115,7 +115,7 @@ router.post("/reminder", async (req, res) => {
                       reminder("code_chef")
                       break;
                   case "Codeforces":
-                      reminder("code_chef")
+                      reminder("codeforces")
                       break
                   case "Leet Code":
                       reminder("leet_code")
