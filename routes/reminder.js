@@ -62,9 +62,10 @@ router.post("/reminder", async (req, res) => {
               filterData.forEach((element) => {
                 let sdt = new Date(element.start_time)
                 let edt = new Date(element.end_time)
+                let new_time = new Date(sdt.getTime() + 19800)
                 txt += `<div class="contest_data"> <div class="name"> <span class="h">Contest name </span> <span style="font-family:Verdana, Geneva, Tahoma, sans-serif ; font-size: 17px;font-style: italic;">: ${element.name}</span></div>
                   <div class="date"><span class="h">Date : </span> ${(sdt.toDateString())}</div>
-                  <div class="time"><span class="h">Time(IST 24 hr format) :  </span>${sdt.toLocaleTimeString({timezone : "Asia/Kolkata"}).slice(0, 5)} to ${edt.toLocaleTimeString({timezone : "Asia/Kolkata"}).slice(0, 5)} </div>
+                  <div class="time"><span class="h">Time(IST 24 hr format) :  </span>${new_time.toTimeString().slice(0,5)} to ${new_time.toTimeString().slice(0, 5)} </div>
                   <div class="duration"><span class="h">Duration : </span> ${secondsToTime(element.duration)}</div>
                   <div class="link"><span class="h">Link : </span><a href="${element.url}">Click Here</a></div>
                   <hr></div>`;
@@ -106,9 +107,32 @@ router.post("/reminder", async (req, res) => {
               console.log(error);
             });
         }
-        reminder("codeforces")
-        reminder("code_chef")
-        reminder("leet_code")
+        if(ele.choices){
+          const choice = (ele.choices).split(",")
+          for (let i = 0; i<choice.length ; i++){
+              switch (choice[i]) {
+                  case "Code Chef":
+                      reminder("code_chef")
+                      break;
+                  case "Codeforces":
+                      reminder("code_chef")
+                      break
+                  case "Leet Code":
+                      reminder("leet_code")
+                      break
+                  case "Kick Start":
+                      reminder("kick_start")
+                      break
+                  default:
+                      break;
+              }
+          }
+        }
+        else{
+          reminder("code_chef")
+          reminder("codeforces")
+          reminder("leet_code")
+        }
       }
     })
   })

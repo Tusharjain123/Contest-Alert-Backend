@@ -8,7 +8,10 @@ const jwt = require("jsonwebtoken")
 
 // For Adding data and Sending subscription message
 router.post("/subscribe", [
-  body("email", "Enter a valid email").isEmail()],
+  body("email", "Enter a valid email").isEmail(),
+body("alert", "Alert field is empty").isLength({
+  min: 1,
+}),],
   async (req, res) => {
     let u = await User.findOne({ email: req.body.email })
     if (u && u.verified) {
@@ -22,11 +25,11 @@ router.post("/subscribe", [
       if (u){
         await User.findByIdAndDelete(u._id)
       }
-      const { name, email } = req.body;
-      const userData = jwt.sign({ name: name, email: email }, process.env.SECRET_KEY,{
+      const { name, email, alert } = req.body;
+      const userData = jwt.sign({ name: name, email: email, choices: alert }, process.env.SECRET_KEY,{
         expiresIn: '30m'
     })
-      const user = new User({ name: name, email: email, verified: false, userid: userData });
+      const user = new User({ name: name, email: email, verified: false, userid: userData, choices: alert });
       const saveNote = await user.save();
       res.json(saveNote);
       const msg = {

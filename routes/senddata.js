@@ -13,6 +13,9 @@ router.post("/senddata", async (req, res) => {
         if (ele.verified) {
             const contestData = async (value) => {
                 axios.get("https://www.kontests.net/api/v1/" + value).then((response) => {
+                    if (value === "code_chef" || value === "leet_code"){
+                        response.data = response.data.reverse()
+                    }
                     let txt = `<!DOCTYPE html>
               <html lang="en">
               <head>
@@ -99,9 +102,32 @@ router.post("/senddata", async (req, res) => {
                         console.log(error);
                     });
             };
-            contestData("codeforces");
-            contestData("code_chef");
-            contestData("leet_code");
+            if (ele.choices){
+                const choice = (ele.choices).split(",")
+                for (let i = 0; i<choice.length ; i++){
+                    switch (choice[i]) {
+                        case "Code Chef":
+                            contestData("code_chef")
+                            break;
+                        case "Codeforces":
+                            contestData("code_chef")
+                            break
+                        case "Leet Code":
+                            contestData("leet_code")
+                            break
+                        case "Kick Start":
+                            contestData("kick_start")
+                            break
+                        default:
+                            break;
+                    }
+                }
+            }
+            else{
+                contestData("code_chef")
+                contestData("codeforces")
+                contestData("leet_code")
+            }
         }
     });
 });
