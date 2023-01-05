@@ -59,7 +59,6 @@ router.post("/senddata", async (req, res) => {
                       `;
                     response.data.forEach((element) => {
                         let sdt = new Date(element.start_time)
-                        let edt = new Date(element.end_time)
                         let new_start_date = date_time.formatInTimeZone(element.start_time, "Asia/Kolkata",'yyyy-MM-dd HH:mm:ss' )
                         let new_end_date = date_time.formatInTimeZone(element.end_time, "Asia/Kolkata",'yyyy-MM-dd HH:mm:ss' )
                         let arr_new_date = new_start_date.split(" ")

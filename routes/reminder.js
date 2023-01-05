@@ -61,11 +61,13 @@ router.post("/reminder", async (req, res) => {
     
               filterData.forEach((element) => {
                 let sdt = new Date(element.start_time)
-                let edt = new Date(element.end_time)
-                let new_time = new Date(sdt.getTime() + 19800)
+                let new_start_date = date_time.formatInTimeZone(element.start_time, "Asia/Kolkata",'yyyy-MM-dd HH:mm:ss' )
+                let new_end_date = date_time.formatInTimeZone(element.end_time, "Asia/Kolkata",'yyyy-MM-dd HH:mm:ss' )
+                let arr_new_date = new_start_date.split(" ")
+                let arr_new_end_date = new_end_date.split(" ")
                 txt += `<div class="contest_data"> <div class="name"> <span class="h">Contest name </span> <span style="font-family:Verdana, Geneva, Tahoma, sans-serif ; font-size: 17px;font-style: italic;">: ${element.name}</span></div>
                   <div class="date"><span class="h">Date : </span> ${(sdt.toDateString())}</div>
-                  <div class="time"><span class="h">Time(IST 24 hr format) :  </span>${new_time.toTimeString().slice(0,5)} to ${new_time.toTimeString().slice(0, 5)} </div>
+                  <div class="time"><span class="h">Time(IST 24 hr format) :  </span>${arr_new_date[1].slice(0,5)} to ${arr_new_end_date[1].slice(0, 5)} </div>
                   <div class="duration"><span class="h">Duration : </span> ${secondsToTime(element.duration)}</div>
                   <div class="link"><span class="h">Link : </span><a href="${element.url}">Click Here</a></div>
                   <hr></div>`;
