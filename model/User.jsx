@@ -8,7 +8,10 @@ const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+    },
+    choices : {
+        type : String,
+        required: true
     },
     userid: {
         type: String,
