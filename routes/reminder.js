@@ -5,20 +5,33 @@ require("dotenv").config();
 const User = require("../model/User.jsx");
 const nodemailer = require("nodemailer");
 const secondsToTime = require("../secondtoTime")
-const date_time= require("date-fns-tz")
+const date_time = require("date-fns-tz")
 
+const transporter = nodemailer.createTransport({
+  pool: true,
+  maxConnections: 20,
+  maxMessages: 200,
+  service: "gmail",
+  auth: {
+      user: process.env.REACT_APP_EMAIL,
+      pass: process.env.REACT_APP_PASSWORD,
+  },
+  secure: true,
+  port: 587,
+  host: "smtp.gmail.com",
+})
 router.post("/reminder", async (req, res) => {
-    let dat = await User.find({});
-    res.json(dat);
-    dat.forEach((ele) => {
-      if (ele.verified){
-        const reminder = async (value) => {
-          axios.get("https://www.kontests.net/api/v1/" + value).then((response) => {
-            const filterData = (response.data.filter((ele) => {
-              return ele.in_24_hours === "Yes"
-            }))
-            if (filterData.length >= 1) {
-              let txt = `<!DOCTYPE html>
+  let dat = await User.find({});
+  res.json(dat);
+  dat.forEach((ele) => {
+    if (ele.verified) {
+      const reminder = async (value) => {
+        axios.get("https://www.kontests.net/api/v1/" + value).then((response) => {
+          const filterData = (response.data.filter((ele) => {
+            return ele.in_24_hours === "Yes"
+          }))
+          if (filterData.length >= 1) {
+            let txt = `<!DOCTYPE html>
                 <html lang="en">
                 <head>
                     <meta charset="UTF-8">
@@ -58,85 +71,90 @@ router.post("/reminder", async (req, res) => {
                     <div class="container">
                         <div class="heading">Reminder Contest ${value}</div>
                         `;
-    
-    
-              filterData.forEach((element) => {
-                let sdt = new Date(element.start_time)
-                let new_start_date = date_time.formatInTimeZone(element.start_time, "Asia/Kolkata",'yyyy-MM-dd HH:mm:ss' )
-                let new_end_date = date_time.formatInTimeZone(element.end_time, "Asia/Kolkata",'yyyy-MM-dd HH:mm:ss' )
-                let arr_new_date = new_start_date.split(" ")
-                let arr_new_end_date = new_end_date.split(" ")
-                txt += `<div class="contest_data"> <div class="name"> <span class="h">Contest name </span> <span style="font-family:Verdana, Geneva, Tahoma, sans-serif ; font-size: 17px;font-style: italic;">: ${element.name}</span></div>
+
+
+            filterData.forEach((element) => {
+              let sdt = new Date(element.start_time)
+              let new_start_date = date_time.formatInTimeZone(element.start_time, "Asia/Kolkata", 'yyyy-MM-dd HH:mm:ss')
+              let new_end_date = date_time.formatInTimeZone(element.end_time, "Asia/Kolkata", 'yyyy-MM-dd HH:mm:ss')
+              let arr_new_date = new_start_date.split(" ")
+              let arr_new_end_date = new_end_date.split(" ")
+              txt += `<div class="contest_data"> <div class="name"> <span class="h">Contest name </span> <span style="font-family:Verdana, Geneva, Tahoma, sans-serif ; font-size: 17px;font-style: italic;">: ${element.name}</span></div>
                   <div class="date"><span class="h">Date : </span> ${(sdt.toDateString())}</div>
-                  <div class="time"><span class="h">Time(IST 24 hr format) :  </span>${arr_new_date[1].slice(0,5)} to ${arr_new_end_date[1].slice(0, 5)} </div>
+                  <div class="time"><span class="h">Time(IST 24 hr format) :  </span>${arr_new_date[1].slice(0, 5)} to ${arr_new_end_date[1].slice(0, 5)} </div>
                   <div class="duration"><span class="h">Duration : </span> ${secondsToTime(element.duration)}</div>
                   <div class="link"><span class="h">Link : </span><a href="${element.url}">Click Here</a></div>
                   <hr></div>`;
-              });
-              txt += `</div></div><div style = "margin-top: 10px;">To unsubscribe from our newsletter Click here -> <a href='https://contest-saathi.web.app/unsubscribe'>Unsubscribe</a></div></body></html>`;
-              const msg = {
-                from: process.env.REACT_APP_EMAIL,
-                to: ele.email,
-                subject: "Reminder",
-                html: txt,
-              };
-    
-              const transporter = nodemailer.createTransport({
-                  service: "gmail",
-                  auth: {
-                    user: process.env.REACT_APP_EMAIL,
-                    pass: process.env.REACT_APP_PASSWORD,
-                  },
-                  secure: true,
-                  port: 587,
-                  host: "smtp.gmail.com",
-                })
-                transporter.verify(function (error, success) {
-                  if (error) {
-                    console.log(error);
-                  } else {
-                    transporter.sendMail(msg, (err) => {
-                      if (err) {
-                        return console.log("Error occurs", err);
-                      } else {
-                        return console.log("Email sent");
-                      }
-                    });
-                  }
-                });
-            }
-          })
-            .catch(function (error) {
-              console.log(error);
             });
-        }
-        if(ele.choices){
-          const choice = (ele.choices).split(",")
-          for (let i = 0; i<choice.length ; i++){
-              switch (choice[i]) {
-                  case "Code Chef":
-                      reminder("code_chef")
-                      break;
-                  case "Codeforces":
-                      reminder("codeforces")
-                      break
-                  case "Leet Code":
-                      reminder("leet_code")
-                      break
-                  case "Kick Start":
-                      reminder("kick_start")
-                      break
-                  default:
-                      break;
+            txt += `</div></div><div style = "margin-top: 10px;">To unsubscribe from our newsletter Click here -> <a href='https://contest-saathi.web.app/unsubscribe'>Unsubscribe</a></div></body></html>`;
+            const msg = {
+              from: process.env.REACT_APP_EMAIL,
+              to: ele.email,
+              subject: "Reminder",
+              html: txt,
+            };
+            transporter.verify(function (error, success) {
+              if (error) {
+                console.log(error);
+              } else {
+                setTimeout(() => {
+                  transporter.sendMail(msg, (err) => {
+                    if (err) {
+                      return console.log("Error occurs", err);
+                    } else {
+                      return console.log("Email sent");
+                    }
+                  });
+                }, 10000)
               }
+            });
+          }
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+      if (ele.choices) {
+        const choice = (ele.choices).split(",")
+        for (let i = 0; i < choice.length; i++) {
+          switch (choice[i]) {
+            case "Code Chef":
+              setTimeout(() => {
+                reminder("code_chef")
+              }, 5000)
+              break;
+            case "Codeforces":
+              setTimeout(() => {
+                reminder("codeforces")
+              }, 1000)
+              break
+            case "Leet Code":
+              setTimeout(() => {
+                reminder("leet_code")
+              }, 1000)
+              break
+            case "Kick Start":
+              setTimeout(() => {
+                reminder("kick_start")
+              }, 1000)
+              break
+            default:
+              break;
           }
         }
-        else{
-          reminder("code_chef")
-          reminder("codeforces")
-          reminder("leet_code")
-        }
       }
-    })
+      else {
+        setTimeout(() => {
+          reminder("code_chef")
+        }, 1000)
+        setTimeout(() => {
+          reminder("codeforces")
+        }, 1000)
+        setTimeout(() => {
+          reminder("leet_code")
+        }, 1000)
+      }
+    }
   })
-  module.exports = router;
+})
+module.exports = router;
