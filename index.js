@@ -36,6 +36,10 @@ cron.schedule('0 1 * * *', async () => {
   const response =  await axios.post("https://contest-alert-backened-production.up.railway.app/api/reminderemail/reminder")
 })
 
+cron.schedule('30 13 * * *', async () => {
+  const response =  await axios.post("https://contest-alert-backened-production.up.railway.app/api/reminderemail/reminder")
+})
+
 
 app.listen(process.env.PORT,()=>{
     console.log("Server is started")
