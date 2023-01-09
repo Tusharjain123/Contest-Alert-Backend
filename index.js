@@ -23,7 +23,7 @@ app.use("/api/delete", require("./routes/delete.js"))
 app.use("/api/reminderemail", require("./routes/reminder.js"))
 app.use("/api/senddataemail", require("./routes/senddata.js"))
 app.use("/api/verificationemail", require("./routes/userverification.js"))
-
+app.use("/api/updating", require("./routes/update.js"))
 app.get("/", (req,res)=>{
 res.send("Working")})
 
