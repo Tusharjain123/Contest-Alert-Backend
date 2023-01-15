@@ -9,7 +9,7 @@ const date_time = require("date-fns-tz")
 
 const transporter = nodemailer.createTransport({
   pool: true,
-  maxConnections: 20,
+  maxConnections: 100,
   maxMessages: 200,
   service: "gmail",
   auth: {
