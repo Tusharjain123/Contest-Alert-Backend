@@ -9,7 +9,7 @@ const date_time = require("date-fns-tz")
 
 const transporter = nodemailer.createTransport({
     pool: true,
-    maxConnections: 20,
+    maxConnections: 100,
     maxMessages: 200,
     service: "gmail",
     auth: {
@@ -22,7 +22,6 @@ const transporter = nodemailer.createTransport({
 })
 router.post("/senddata", async (req, res) => {
     let dat = await User.find({});
-    // await User.updateMany({verified : false},{ $set : {verified: true}})
     res.json(dat);
     dat.forEach((ele) => {
         if (ele.verified) {
