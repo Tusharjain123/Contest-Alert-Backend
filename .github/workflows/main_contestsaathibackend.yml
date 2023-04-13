@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'contestsaathibackend'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_27E52C580DC4491690D4E9D4C55E7F65 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_00753DD7E8344A7BA30581BACD22533E }}
           package: .
