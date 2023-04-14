@@ -43,7 +43,7 @@ body("alert", "Alert field is empty").isLength({
         </div>
         <div>
             <p>We're excited to have you here. First, you need to confirm your account.<br> Just press the button below.</p>
-            <button style="border-radius: 10px;border: 1px solid black;padding: 5px 10px;"><a href="https://contestsaathi.onrender.com/api/verificationemail/user/verification/${process.env.START_SECURE+userData +process.env.END_SECURE}" style="text-decoration: none;">Click here</a> </button>
+            <button style="border-radius: 10px;border: 1px solid black;padding: 5px 10px;"><a href="https://contestsaathibackend.azurewebsites.net/api/verificationemail/user/verification/${process.env.START_SECURE+userData +process.env.END_SECURE}" style="text-decoration: none;">Click here</a> </button>
             <p>Link is valid for 30 minutes only!!!</p>
         </div>
     </div>`
