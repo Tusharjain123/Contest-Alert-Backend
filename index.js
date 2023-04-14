@@ -3,13 +3,8 @@ const express = require("express")
 const cors = require("cors")
 const axios = require("axios");
 var cron = require('node-cron');
-const run = async () =>{
-  await connectToMongo().then(()=>{
-    console.log("Connected")
-  }).catch(err => console.log(err))
 
-}
-run()
+connectToMongo()
 
 const app = express() 
 app.use(cors({
@@ -41,6 +36,6 @@ cron.schedule('30 13 * * *', async () => {
 })
 
 
-app.listen(process.env.PORT,()=>{
+app.listen(process.env.PORT || 5000,()=>{
     console.log("Server is started")
 })
