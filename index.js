@@ -24,15 +24,15 @@ res.send("Working")})
 
 
 cron.schedule('0 0 * * 0', async () => {
-  const response =  await axios.post("https://contestsaathi.onrender.com/api/senddataemail/senddata")
+  const response =  await axios.post("https://contestsaathibackend.azurewebsites.net/api/senddataemail/senddata")
 })
 
 cron.schedule('0 1 * * *', async () => {
-  const response =  await axios.post("https://contestsaathi.onrender.com/api/reminderemail/reminder")
+  const response =  await axios.post("https://contestsaathibackend.azurewebsites.net/api/reminderemail/reminder")
 })
 
 cron.schedule('30 13 * * *', async () => {
-  const response =  await axios.post("https://contestsaathi.onrender.com/api/reminderemail/reminder")
+  const response =  await axios.post("https://contestsaathibackend.azurewebsites.net/api/reminderemail/reminder")
 })
 
 
