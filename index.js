@@ -7,6 +7,7 @@ var cron = require('node-cron');
 connectToMongo()
 
 const app = express() 
+
 app.use(cors({
     origin: "*"
 }))
@@ -36,6 +37,6 @@ cron.schedule('30 13 * * *', async () => {
 })
 
 
-app.listen(process.env.PORT || 8080,()=>{
+app.listen(process.env.PORT || 5000,()=>{
     console.log("Server is started")
 })
