@@ -3,10 +3,9 @@ const express = require("express")
 const cors = require("cors")
 const axios = require("axios");
 var cron = require('node-cron');
-
-connectToMongo()
-
 const app = express() 
+ 
+connectToMongo()
 
 app.use(cors({
     origin: "*"
@@ -20,20 +19,21 @@ app.use("/api/reminderemail", require("./routes/reminder.js"))
 app.use("/api/senddataemail", require("./routes/senddata.js"))
 app.use("/api/verificationemail", require("./routes/userverification.js"))
 app.use("/api/updating", require("./routes/update.js"))
-app.get("/", (req,res)=>{
-res.send("Working")})
 
+app.get("/", (req,res)=>{
+res.send("Working")}
+)
 
 cron.schedule('0 0 * * 0', async () => {
-  const response =  await axios.post("https://contestsaathibackend.azurewebsites.net/api/senddataemail/senddata")
+  const response =  await axios.post(`${process.env.BASE_URL}api/senddataemail/senddata`)
 })
 
 cron.schedule('0 1 * * *', async () => {
-  const response =  await axios.post("https://contestsaathibackend.azurewebsites.net/api/reminderemail/reminder")
+  const response =  await axios.post(`${process.env.BASE_URL}api/reminderemail/reminder`)
 })
 
 cron.schedule('30 13 * * *', async () => {
-  const response =  await axios.post("https://contestsaathibackend.azurewebsites.net/api/reminderemail/reminder")
+  const response =  await axios.post(`${process.env.BASE_URL}api/reminderemail/reminder`)
 })
 
 
