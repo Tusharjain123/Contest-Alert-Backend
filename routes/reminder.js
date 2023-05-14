@@ -10,7 +10,7 @@ const send = require("../services/mailservice.js")
 
 const mailWriter = (value) => {
   var txt = ""
-  var content = axios.get("https://www.kontests.net/api/v1/" + value).then((response) => {
+  var content = axios.get("https://kontests.net/api/v1/" + value).then((response) => {
     if (value === "code_chef" || value === "leet_code") {
       response.data = response.data.reverse()
   }
