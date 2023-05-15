@@ -99,11 +99,6 @@ const sendmsg = async (dat, email_msg) => {
               await send(ele.email, "Reminder", email_msg.leet_code)
             }
             break
-          case "Kick Start":
-            if (email_msg.kick_start != "") {
-              await send(ele.email, "Reminder", email_msg.kick_start)
-            }
-            break
           case "AtCoder":
             if (email_msg.at_coder != "") {
               await send(ele.email, "Reminder", email_msg.at_coder)
@@ -134,7 +129,6 @@ router.post("/reminder", async (req, res) => {
   const email_msg = {
     "codeforces": "",
     "leet_code": "",
-    "kick_start": "",
     "code_chef": "",
     "at_coder": ""
   }
@@ -144,4 +138,5 @@ router.post("/reminder", async (req, res) => {
   await sendmsg(dat, email_msg)
   res.json({msg: "Reminder mail send"});
 })
+
 module.exports = router;
